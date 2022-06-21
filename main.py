@@ -68,13 +68,13 @@ class GameInfo:
             except:
                 self.besttime = 0
 
-
-        """level_time = round(time.time() - self.level_start_time)
+         """
+        def get_best_time(self):
+        level_time = round(time.time() - self.level_start_time)
         if level_time < self.besttime:
             self.besttime = level_time
             with open(path.join(self.dir, BT_FILE), 'w') as f:
                f.write(str(self.best_time))"""
-               
         
 # wprowadzanie aut
 class AbstractCar:
@@ -187,6 +187,8 @@ def move_player(player_car):
 
 #sprawdzenie czy doszło do kolizji
 def handle_collision(player_car, game_info):
+    level_time = round(time.time() - game_info.level_start_time)    #to odpisałam
+    besttime = 0                                                    #to odpisałam
     if player_car.collide(TRACK_BORDER_MASK) != None:
         player_car.bounce()
 
@@ -197,7 +199,10 @@ def handle_collision(player_car, game_info):
         else:
             game_info.next_level()
             player_car.reset()
-            game_info.load_data()
+            if level_time < besttime:      #to dopisałąm
+                besttime = level_time
+                with open(path.join(dir, BT_FILE), 'w') as f:
+                    f.write(str(besttime))
 
 run = True
 clock = pygame.time.Clock()
