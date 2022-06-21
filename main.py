@@ -37,9 +37,7 @@ class GameInfo:
         self.besttime = 0
 
     def next_level(self):
-        print(self.besttime)
         self.get_best_time()
-        print(self.besttime)
         self.level += 1
         self.started = False
         self.level_start_time = 0
